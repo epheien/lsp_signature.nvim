@@ -629,6 +629,11 @@ local signature_handler = function(err, result, ctx, config)
     log('sig_cfg new bufnr, winnr ', _LSP_SIG_CFG.bufnr, _LSP_SIG_CFG.winnr)
   end
 
+  if _LSP_SIG_CFG.handler_opts.border ~= 'none' then
+    vim.api.nvim_set_option_value('winhighlight', 'NormalFloat:Normal,EndOfBuffer:',
+      { scope = 'local', win = _LSP_SIG_CFG.winnr })
+  end
+
   if _LSP_SIG_CFG.transparency and _LSP_SIG_CFG.transparency > 1 and _LSP_SIG_CFG.transparency < 100 then
     if type(_LSP_SIG_CFG.winnr) == 'number' and vim.api.nvim_win_is_valid(_LSP_SIG_CFG.winnr) then
       vim.api.nvim_set_option_value('winblend', _LSP_SIG_CFG.transparency, {
